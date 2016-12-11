@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-"""tcx_vpower.py.
+"""vpower.py.
 
 Usage:
-  tcx_vpower.py [--lever=<lv>] INPUT
+  vpower.py [--lever=<lv>] INPUT
 
 Arguments:
   INPUT         Required .TCX input filename
