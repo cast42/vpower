@@ -1,5 +1,5 @@
 # vpower
-Add virtual power to your trainer ride
+Add virtual power to your trainer ride on the Tacx Blue Motion T2600. Record your speed during your workout on your Garmin and add virtual power with this Python program. 
 
 ## Usage
 - First, obtain a TCX file corresponding with the .fit file from your Garmin.
