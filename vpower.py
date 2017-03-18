@@ -76,7 +76,7 @@ def process_track(track, lever):
     Process a TCX file track element.
     """
     for child in track:
-        if child.tag == '{%s}Trackpoint'%ns2:
+        if child.tag == '{%s}Trackpoint'%ns1:
             process_trackpoint(child, lever)
 
 def process_file(tcxfile, lever):
@@ -90,7 +90,7 @@ def process_file(tcxfile, lever):
     tracks = []
 
     for element in root.iter():
-        if element.tag == '{%s}Track'%ns2:
+        if element.tag == '{%s}Track'%ns1:
             tracks.append(element)
 
     for element in tracks:
