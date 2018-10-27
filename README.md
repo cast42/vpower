@@ -14,3 +14,19 @@ python vpower.py <file>.tcx
 ```
 python vpower.py --lever=6 <file>.tcx
 ```
+
+# fit2gpx
+
+## Setup
+The python library reauires Python 2.7. I created a conda environment to set this up:
+```
+conda create -n vpower environment.yml
+```
+
+## Usage
+- Execute:
+```
+python fit2gpx.py <file>.fit
+```
+- A new file is created (or overwritten) called `<file>.gpx` that containt the ride in gpx format.
+
