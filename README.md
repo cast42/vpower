@@ -18,9 +18,14 @@ python vpower.py --lever=6 <file>.tcx
 # fit2gpx
 
 ## Setup
-The python library reauires Python 2.7. I created a conda environment to set this up:
+The python fitparse library requires Python 2.7. I created a conda environment to set this up:
 ```
 conda create -n vpower environment.yml
+```
+If you are still running python 2.7, you can just install fitparse and docopt:
+```
+pip install docopt
+pip install fitparse
 ```
 
 ## Usage
@@ -28,5 +33,5 @@ conda create -n vpower environment.yml
 ```
 python fit2gpx.py <file>.fit
 ```
-- A new file is created (or overwritten) called `<file>.gpx` that containt the ride in gpx format.
+- A new file is created (or overwritten) called `<file>.gpx` that contains the ride in gpx format.
 
