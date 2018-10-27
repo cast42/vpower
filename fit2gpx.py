@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""vpower.py.
+"""fit2gpx.py.
 
 Usage:
   fit2gpx.py  INPUT
@@ -18,7 +18,7 @@ from fitparse import FitFile, FitParseError
 from datetime import datetime
 from docopt import docopt
 
-def process_file(inputfilename)
+def process_file(inputfilename):
     try:
         fitfile = FitFile(inputfilename)
         fitfile.parse()

@@ -19,6 +19,7 @@ dependencies:
   - wheel=0.32.2=py27_0
   - zlib=1.2.11=hf3cbc9b_2
   - pip:
+    - docopt==0.6.2
     - fitparse==1.0.1
 prefix: /anaconda3/envs/vpower
 
