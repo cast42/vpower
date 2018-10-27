@@ -2,6 +2,7 @@ from __future__ import print_function
 from __future__ import division
 import sys
 from fitparse import FitFile, FitParseError
+from datetime import datetime
 
 def s2p(speed, lever=5):
     assert (lever > 0 and lever < 11)
@@ -33,23 +34,15 @@ with open("test.gpx",'w') as f:
     # Get all data messages that are of type record
     f.write('  <trk>\n')
     for record in fitfile.get_messages('record'):
-        vals = {}
-    # Go through all the data entries in this record
-        for record_data in record:
-
-            # Print the records name and value (and units if it has any)
-            if record_data.units:
-                print (" * %s: %s %s" % (
-                    record_data.name, record_data.value, record_data.units,
-                ))
-            else:
-                print (" * %s: %s" % (record_data.name, record_data.value))
-            vals[record_data.name] = record_data.value
+        # Go through all the data entries in this record
+        #vals = {record_data.name:record_data.value for record_data in record}
+        vals = record.get_values()
         f.write('  <trkpt lat="%s" lon="%s">\n' % (vals['position_lat'], vals['position_long']))
         if 'altitude' in vals:
             f.write('   <ele>%s</ele>\n' % vals['altitude'])
         if 'timestamp' in vals:
-            f.write('   <time>%s</time>\n' % vals['timestamp'])
+            #ts = dt.datetime.strptime(vals['timestamp'], "%Y-%m-%d %H:%M:%S").replace(tzinfo=dt.timezone.utc)
+            f.write('   <time>%s</time>\n' % vals['timestamp'].strftime("%Y-%m-%dT%H:%M:%SZ"))
         f.write('  </trkpt>\n')
     f.write('  </trk>\n')
     f.write("</gpx>")
