@@ -18,6 +18,12 @@ from fitparse import FitFile, FitParseError
 from datetime import datetime
 from docopt import docopt
 
+def semi2deg(pos):
+    """Based on https://github.com/adiesner/Fit2Tcx/blob/master/src/Fit2TcxConverter.cpp"""
+    DEGREES = 180.0
+    SEMICIRCLES  = 0x80000000
+    return float(pos) * DEGREES / SEMICIRCLES
+
 def process_file(inputfilename):
     try:
         fitfile = FitFile(inputfilename)
@@ -50,7 +56,8 @@ def process_file(inputfilename):
         for record in fitfile.get_messages('record'):
             # Go through all the data entries in this record
             vals = record.get_values()
-            f.write('  <trkpt lat="%s" lon="%s">\n' % (vals['position_lat'], vals['position_long']))
+            p_lat, p_long = semi2deg(vals['position_lat']), semi2deg(vals['position_long'])
+            f.write('  <trkpt lat="%s" lon="%s">\n' % (p_lat, p_long))
             if 'altitude' in vals:
                 f.write('   <ele>%s</ele>\n' % vals['altitude'])
             if 'timestamp' in vals:
