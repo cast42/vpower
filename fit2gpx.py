@@ -28,7 +28,7 @@ def process_file(inputfilename):
     try:
         fitfile = FitFile(inputfilename)
         fitfile.parse()
-    except FitParseError, e:
+    except (FitParseError, e):
         print ("Error while parsing .FIT file: %s" % e)
         sys.exit(1)
 
