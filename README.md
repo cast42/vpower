@@ -5,7 +5,7 @@ Add virtual power to your trainer ride on the Tacx Blue Motion T2600. Record you
 - Download the file [vpower2.py](https://github.com/cast42/vpower/blob/master/vpower2.py) into the same directory of the .fit file.
 - Execute:
 ```
-python vpower2.py <file>.tcx
+python vpower2.py <file>.fit
 ```
 - A new file is created (or overwritten) called `vpower_<file>.tcx` that contains the calculated power values derived from the speed recorded by your Garmin.
 - Upload the generated file `vpower_<file>.tcx` to Strava for analysis
