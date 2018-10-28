@@ -11,7 +11,7 @@ python vpower2.py <file>.fit
 - Upload the generated file `vpower_<file>.tcx` to Strava for analysis
 - By default, it's assumed the lever is at position 5. If your lever was at another position during your workout, specify this as follows (assuming lever position was 6):
 ```
-python vpower2.py --lever=6 <file>.tcx
+python vpower2.py --lever=6 <file>.fit
 ```
 
 # vpower
