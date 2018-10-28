@@ -64,13 +64,13 @@ def s2p(speed, lever=5):
     return w if w > 0 else 0
 
 
-def process_file(fitfile, lever):
+def process_file(fitfilename, lever):
     """
     Process the whole FIT file.
     """
 
     try:
-        fitfile = FitFile(fitfile)
+        fitfile = FitFile(fitfilename)
         fitfile.parse()
     except FitParseError, e:
         print ("Error while parsing .FIT file: %s" % e)
@@ -148,8 +148,8 @@ def process_file(fitfile, lever):
                     etree.SubElement(extensions, 'Watts'),'Value')
                 power.text = str(s2p(vals['speed'], lever))
 
-        
-    etree.ElementTree(tcx).write('test.tcx', encoding='utf-8', xml_declaration=True)
+    new_name = "vpower_" + fitfilename[:-3] + 'tcx'
+    etree.ElementTree(tcx).write(new_name, encoding='utf-8', xml_declaration=True)
 
 def main(argv=None):
     arguments = docopt(__doc__)
