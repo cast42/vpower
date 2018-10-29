@@ -88,6 +88,10 @@ def process_file(fitfilename, lever):
         ' '.join([
             'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2',
             'http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd',
+            'http://www.garmin.com/xmlschemas/ActivityExtension/v2',
+            'http://www.garmin.com/xmlschemas/ActivityExtensionv2.xsd',
+            'http://www.garmin.com/xmlschemas/FatCalories/v1',
+            'http://www.garmin.com/xmlschemas/fatcalorieextensionv1.xsd',
         ])
     )
     tcx.set('xmlns:ns5', 'http://www.garmin.com/xmlschemas/ActivityGoals/v1')
@@ -100,18 +104,27 @@ def process_file(fitfilename, lever):
     activities = etree.SubElement(tcx, 'Activities')
     activity = etree.SubElement(activities, 'Activity')
     activity.attrib['Sport'] = 'Biking'
+    for record in fitfile.get_messages('record'):
+        vals = record.get_values()
+        if 'timestamp' in vals:
+            starttime = vals['timestamp']
+        break
     activity_id = etree.SubElement(activity, 'Id')
+    activity_id.text = starttime.strftime("%Y-%m-%dT%H:%M:%SZ")
     lap = etree.SubElement(activity, 'Lap')
+    lap.attrib['StartTime'] = starttime.strftime("%Y-%m-%dT%H:%M:%SZ")
     track = etree.SubElement(lap, 'Track')
+
     for record in fitfile.get_messages('record'):
         vals = record.get_values()
         trackpoint = etree.SubElement(track, 'Trackpoint')
-        p_lat, p_long = semi2deg(vals['position_lat']), semi2deg(vals['position_long'])
-        position = etree.SubElement(trackpoint, 'Position')
-        position_lat = etree.SubElement(position, 'LatitudeDegrees')
-        position_long = etree.SubElement(position, 'LongitudeDegrees')
-        position_long.text = str(p_lat)
-        position_lat.text = str(p_long)
+        if 'position_lat' in vals and 'position_long' in vals:
+            p_lat, p_long = semi2deg(vals['position_lat']), semi2deg(vals['position_long'])
+            position = etree.SubElement(trackpoint, 'Position')
+            position_lat = etree.SubElement(position, 'LatitudeDegrees')
+            position_long = etree.SubElement(position, 'LongitudeDegrees')
+            position_long.text = str(p_lat)
+            position_lat.text = str(p_long)
         if 'timestamp' in vals:
             timestamp = etree.SubElement(trackpoint, 'Time')
             timestamp.text = vals['timestamp'].strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -138,15 +151,14 @@ def process_file(fitfilename, lever):
             tpx.attrib['CadenceSensor'] = 'Bike'
             if 'power' in vals:
                 power = etree.SubElement(
-                    etree.SubElement(extensions, 'Watts'),'Value')
+                    etree.SubElement(extensions, 'ns3:Watts'),'Value')
                 power.text = str(vals['power'])
             if 'speed' in vals:
                 speed = etree.SubElement(extensions, 'ns3:Speed')
                 speed.text = str(vals['speed']) # * 60.0 * 60.0 / 1000.0) # Convert m/s to km/h
                 if not 'power' in vals:
-                    power = etree.SubElement(
-                    etree.SubElement(extensions, 'Watts'),'Value')
-                power.text = str(s2p(vals['speed'], lever))
+                    power = etree.SubElement(extensions, 'ns3:Watts')
+                    power.text = str(s2p(vals['speed'], lever))
 
     new_name = "vpower_" + fitfilename[:-3] + 'tcx'
     etree.ElementTree(tcx).write(new_name, encoding='utf-8', xml_declaration=True)
