@@ -2,7 +2,7 @@
 Add virtual power to your trainer ride on the Tacx Blue Motion T2600. Record your speed during your workout on your Garmin and add virtual power with this Python program. The advantage of vpower2 over vpower is that the convertion step from FIT file to TCX is not needed anymore.
 
 ## Installation
-- Clone vpower:
+- Clone or download vpower:
 ```
 git clone https://github.com/cast42/vpower.git
 ```
@@ -16,7 +16,6 @@ conda create -n vpower environment.yml
 ```
 source activate vpower
 ```
-- Download the file [vpower2.py](https://github.com/cast42/vpower/blob/master/vpower2.py) into the same directory of the .fit file.
 - Execute:
 ```
 python vpower2.py <file>.fit
