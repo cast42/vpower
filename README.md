@@ -68,3 +68,7 @@ python fit2gpx.py <file>.fit
 ```
 - A new file is created (or overwritten) called `<file>.gpx` that contains the ride in gpx format.
 
+# Future plans
+
+These tools rely on fitparse that is still using Python 2.7. To upgrade, those version should be rewritten with [fitdecode](https://github.com/polyvertex/fitdecode) that uses a modern Python version (>= 3.6).
+
